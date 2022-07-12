@@ -19,6 +19,10 @@ RSpec.describe "Merchants API" do
 
       expect(merchant[:attributes]).to have_key(:name)
       expect(merchant[:attributes][:name]).to be_a(String)
+
+      expect(merchant[:attributes]).to_not have_key(:created_at)
+      expect(merchant[:attributes]).to_not have_key(:updated_at)
+
     end
   end
 
@@ -37,6 +41,12 @@ RSpec.describe "Merchants API" do
 
     expect(merchant[:data][:attributes]).to have_key(:name)
     expect(merchant[:data][:attributes][:name]).to be_a(String)
-
   end
+
+  it "gives 404 error if no merchant exists" do
+    get "/api/v1/merchants/123456"
+    expect(response.message).to eq("Not Found")
+    expect(response.status).to eq 404
+  end
+
 end
