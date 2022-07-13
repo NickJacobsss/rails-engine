@@ -2,7 +2,7 @@ class Api::V1::SearchController < ApplicationController
 
   def find_items
     items = Item.find_items(params[:name])
-    if items.nil?
+    if items.empty?
       render json: { data: [] }, status: 200
     else
       render json: ItemSerializer.new(items)
