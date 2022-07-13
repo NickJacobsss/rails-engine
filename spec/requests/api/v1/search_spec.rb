@@ -48,4 +48,18 @@ RSpec.describe "Search Controller Actions" do
     expect(items).to be_an Array
     expect(items).to be_empty
   end
+
+  it "returns an no merchant found error if no matched merchants" do
+    bb = create(:merchant, name: "Best Buy")
+    apple = create(:merchant, name: "Apple")
+    amazon = create(:merchant, name: "Amazon")
+
+    get "/api/v1/merchants/find?name=TEST"
+
+    no_merchant = JSON.parse(response.body, symbolize_names: true)[:data]
+    # binding.pry
+    expect(response).to be_successful
+    expect(no_merchant[:error]).to eq("No Merchant Found")
+    expect(response.status).to eq 200
+  end
 end
