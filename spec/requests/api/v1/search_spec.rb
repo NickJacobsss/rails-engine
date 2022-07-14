@@ -62,4 +62,16 @@ RSpec.describe "Search Controller Actions" do
     expect(no_merchant[:error]).to eq("No Merchant Found")
     expect(response.status).to eq 200
   end
+
+  it "gives a 400 error if no params are present" do
+    get "/api/v1/merchants/find"
+
+    expect(response.status).to eq 400
+  end
+
+  it "gives a 400 error if no params are present" do
+    get "/api/v1/items/find_all"
+
+    expect(response.status).to eq 400
+  end
 end
